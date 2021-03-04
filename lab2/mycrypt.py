@@ -6,9 +6,14 @@ def encode(s):
     origlen = len(s)
     crypted = ""
     digitmapping = dict(zip('1234567890!"#€%&/()=','!"#€%&/()=1234567890'))
+    illegalmapping = ["å", "ä", "ö", "+"]
+    for c in s:
+        if c in illegalmapping:
+            raise ValueError
     if len(s) > 1000:
         raise ValueError
-    for c in s:
+    padded_val = s.ljust(1000, "z")
+    for c in padded_val:
         if c.isalpha():
             if c.islower():
                 c=c.upper()
@@ -16,7 +21,7 @@ def encode(s):
             crypted+=codecs.encode(c,'rot13')
         elif c in digitmapping:
           crypted+=digitmapping[c]
-    return crypted
+    return crypted[:origlen]
 
 def decode(s):
     decrypted = encode(s).lower()
