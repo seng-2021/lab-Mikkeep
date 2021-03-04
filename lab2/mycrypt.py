@@ -16,9 +16,8 @@ def encode(s):
             crypted+=codecs.encode(c,'rot13')
         elif c in digitmapping:
           crypted+=digitmapping[c]
-
     return crypted
 
 def decode(s):
-    return s
-
+    decrypted = encode(s).lower()
+    return decrypted
